@@ -88,6 +88,16 @@ def create_database(cursor):
                     FOREIGN KEY (specialization_id) REFERENCES specializations(id)
                     )''')
 
+    # доктора и отделения(многие ко многим)
+    cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS doctors_and_departments (
+                        doctor_id INT NOT NULL,
+                        department_id INT NOT NULL, 
+                        PRIMARY KEY (doctor_id, department_id),
+                        FOREIGN KEY (doctor_id) REFERENCES doctors(id),
+                        FOREIGN KEY (department_id) REFERENCES departments(id)
+                        )''')
+
     # спонсоры
     cursor.execute('''
                     CREATE TABLE IF NOT EXISTS sponsors (

@@ -23,6 +23,11 @@ if __name__ == '__main__':
                     print('5. Получить информацию по докторам и специализациям.')
                     print('6. Вывести все этажи без повторений, на которых располагаются палаты.')
                     print('7. Вывести с фондом финансирования в диапазоне.')
+                    print('8. Вывести названия палат, расположенных в корпусах 4 и 5 на 1-м этаже..')
+                    print('9. Вывести названия, корпуса и финансирования отделения.')
+                    print('10. Вывести названия, корпуса и финансирования отделения.')
+                    print('11. Вывести докторов ушедших в отпуск.')
+                    print('12. Вывести кучу всего только в рабочие дни.')
                     print('0. Выход.')
                     user_choice = input('Ваш выбор: ')
                     match user_choice:
@@ -40,6 +45,16 @@ if __name__ == '__main__':
                             get_queries.get_all_departments_with_wards(cursor)
                         case '7':
                             get_queries.get_departments_with_financing_between(cursor)
+                        case '8':
+                            get_queries.get_wards_on_1_floor_and_building_4_5(cursor)
+                        case '9':
+                            get_queries.get_info_from_3_or_6_building(cursor)
+                        case '10':
+                            get_queries.get_departments_with_some_sponsor(cursor)
+                        case '11':
+                            get_queries.get_doctors_with_vacations_last_month(cursor)
+                        case '12':
+                            get_queries.get_doctors_and_dep_with_exam_on_workdays(cursor)
                         case '0':
                             connection.close()
                             break
