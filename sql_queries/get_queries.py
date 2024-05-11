@@ -203,4 +203,8 @@ def count_doctors(cursor):
     cursor.execute('SELECT COUNT(id) FROM doctors')
     for i in cursor:
         print('Врачей:', i)
-    
+
+    cursor.execute('''SELECT COUNT(phone) FROM doctors''')
+    doctors_amount = cursor.fetchone()[0]               # cursor.fetchone()[0] один кортеж, cursor.fetchall()[0] кортеж кортежей
+    print(doctors_amount, type(doctors_amount))
+
