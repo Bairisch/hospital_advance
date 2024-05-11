@@ -3,6 +3,9 @@ import pymysql
 from sql_queries import create_queries, delete_queries, get_queries, insert_queries, update_queries
 
 
+# документация и примеры использования запросов в MySQL
+# https://www.w3scholls.com/mysql/func_mysql_dayofweek.asp
+
 server = 'localhost'
 username = 'root'
 port = 3306
@@ -27,7 +30,9 @@ if __name__ == '__main__':
                     print('9. Вывести названия, корпуса и финансирования отделения.')
                     print('10. Вывести названия, корпуса и финансирования отделения.')
                     print('11. Вывести докторов ушедших в отпуск.')
-                    print('12. Вывести кучу всего только в рабочие дни.')
+                    print('12. Вывести докторов которые работаю только в рабочие дни.')
+                    print('13. Вывести докторов используя фильтр LIKE.')
+                    print('14. Добавить доктора.')
                     print('0. Выход.')
                     user_choice = input('Ваш выбор: ')
                     match user_choice:
@@ -55,6 +60,10 @@ if __name__ == '__main__':
                             get_queries.get_doctors_with_vacations_last_month(cursor)
                         case '12':
                             get_queries.get_doctors_and_dep_with_exam_on_workdays(cursor)
+                        case '13':
+                            get_queries.get_doctors_with_some_name(cursor)
+                        case '14':
+                            get_queries.add_doctor(cursor, connection)
                         case '0':
                             connection.close()
                             break

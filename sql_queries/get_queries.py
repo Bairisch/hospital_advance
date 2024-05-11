@@ -120,16 +120,87 @@ def get_doctors_with_vacations_last_month(cursor):
 
 def get_doctors_and_dep_with_exam_on_workdays(cursor):
     '''
-
+    Вывести фамилии врачей с указанием отделений, в которых они проводят обследования.
+    Необходимо учитывать обследования, проводимые только в будние дни
     '''
-    cursor.execute('''SELECT * FROM departments dep
+    cursor.execute('''SELECT first_name, last_name, department_name FROM departments dep
                       JOIN doctors_and_departments d_a_d ON d_a_d.department_id = dep.id
                       JOIN doctors doc ON d_a_d.doctor_id = doc.id
                       JOIN doctors_and_examinations d_a_e ON d_a_e.doctor_id = doc.id
                       JOIN examinations exam ON d_a_e.examination_id = exam.id
                       WHERE day_of_week BETWEEN 1 AND 5
-                      
+                      DAYOFWEEK() если есть поле DATA
        ''')
     for i in cursor:
         print(*i, sep='; ')
 
+
+def get_doctors_with_some_name(cursor):
+    '''
+    получить всех врачей, у которыъ имя начинается с буквы А
+    LIKE ('а%') >>> Арнольд, начинается на а
+    LIKE ('%а') >>> Вова, заканчивается на а
+    '''
+    cursor.execute('''SELECT * FROM doctors
+                    WHERE first_name LIKE ('А%')
+    ''')
+    for i in cursor:
+        print(*i, sep='; ')
+
+
+def get_doctors_with_some_name(cursor):
+    '''
+    получить всех врачей, у которыъ имя начинается с буквы А
+    LIKE ('а%') >>> Арнольд, начинается на а
+    LIKE ('%а') >>> Вова, заканчивается на а
+    '''
+    cursor.execute('''SELECT * FROM doctors
+                    WHERE first_name LIKE ('А%')
+    ''')
+    for i in cursor:
+        print(*i, sep='; ')
+
+
+def get_count(cursor):
+    '''
+
+    '''
+    cursor.execute('''SELECT COUNT(id) FROM doctors''')         # посчитать кол-во
+    for i in cursor:
+        print(*i, sep='; ')
+
+    cursor.execute('''SELECT MAX(salary) FROM doctors''')  # Найти макс зарплату
+    for i in cursor:
+        print(*i, sep='; ')
+
+    cursor.execute('''SELECT MIN(salary) FROM doctors''')  # Найти мин зарплату
+    for i in cursor:
+        print(*i, sep='; ')
+
+    cursor.execute('''SELECT AVG(salary) FROM doctors''')  # Найти средняя зарплату
+    for i in cursor:
+        print(*i, sep='; ')
+
+    cursor.execute('''SELECT * FROM doctors
+                    ORDER BY salary
+    ''')  # сортировку
+    for i in cursor:
+        print(*i, sep='; ')
+
+
+def add_doctor(cursor, connection):
+    first_name = input('first_name: ')
+    last_name = input('first_name: ')
+    phone = input('first_name: ')
+    salary = int(input('first_name: '))
+    query = 'INSERT INTO doctors(first_name, last_name, phone, salary) VALUES (%s, %s, %s, %s)'
+    cursor.execute(query, (first_name, last_name, phone, salary))
+    connection.commit()
+    print('Doctor was added!!!')
+
+
+def count_doctors(cursor):
+    cursor.execute('SELECT COUNT(id) FROM doctors')
+    for i in cursor:
+        print('Врачей:', i)
+    
