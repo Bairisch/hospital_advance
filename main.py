@@ -15,7 +15,16 @@ if __name__ == '__main__':
         with pymysql.connect(host=server, port=port, user=username, password=passwd) as connection:
             print('Connected!')
             with connection.cursor() as cursor:
-                pass
+                while True:
+                    print('1. Создать базу данных и переключиться на нее.')
+                    user_choice = input('Ваш выбор: ')
+                    match user_choice:
+                        case '1':
+                            create_queries.create_database(cursor)
+                        case '0':
+                            connection.close()
+                        case _:
+                            print('Неизвестная команда. Попробуйте еще.')
 
     except pymysql.Error as error:
         print(error)
